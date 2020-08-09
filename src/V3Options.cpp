@@ -587,6 +587,7 @@ void V3Options::notify() {
     FileLine* cmdfl = new FileLine(FileLine::commandLineFilename());
 
     // Notify that all arguments have been passed and final modification can be made.
+    if (!atomiccOnly())
     if (!outFormatOk() && !cdc() && !dpiHdrOnly() && !lintOnly() && !preprocOnly() && !xmlOnly()) {
         v3fatal("verilator: Need --cc, --sc, --cdc, --dpi-hdr-only, --lint-only, "
                 "--xml-only or --E option");
@@ -985,6 +986,16 @@ void V3Options::parseOptsList(FileLine* fl, const string& optdir, int argc, char
                 m_xInitialEdge = flag;
             } else if (onoff(sw, "-xml-only", flag /*ref*/)) {
                 m_xmlOnly = flag;
+            } else if ( onoff   (sw, "-atomicc", flag/*ref*/) )		{  // Atomicc module header parse
+		m_atomicc = flag;
+		FileLine::globalWarnLintOff(true);
+		FileLine::globalWarnStyleOff(true);
+		V3Error::warnFatal(false);
+		static const char *msg[] = {"STMTDLY", "WIDTH", "REALCVT", "LITENDIAN", "IMPLICIT", NULL};
+		for (int ind = 0; msg[ind]; ind++)
+		if (!(FileLine::globalWarnOff(msg[ind], true))) {
+		    fl->v3fatal("Unknown warning specified: "<<sw);
+		}
             } else {
                 hadSwitchPart1 = false;
             }
@@ -1695,6 +1706,7 @@ V3Options::V3Options() {
     m_vpi = false;
     m_xInitialEdge = false;
     m_xmlOnly = false;
+    m_atomicc = false;
 
     m_buildJobs = 1;
     m_convergeLimit = 100;

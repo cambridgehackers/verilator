@@ -289,6 +289,7 @@ private:
     bool        m_vpi;          // main switch: --vpi
     bool        m_xInitialEdge; // main switch: --x-initial-edge
     bool        m_xmlOnly;      // main switch: --xml-only
+    bool	m_atomicc;	// main switch: --dump module header info
 
     int         m_buildJobs;    // main switch: -j
     int         m_convergeLimit;// main switch: --converge-limit
@@ -483,6 +484,7 @@ public:
     bool vpi() const { return m_vpi; }
     bool xInitialEdge() const { return m_xInitialEdge; }
     bool xmlOnly() const { return m_xmlOnly; }
+    bool atomiccOnly() const { return m_atomicc; }
 
     int buildJobs() const { return m_buildJobs; }
     int convergeLimit() const { return m_convergeLimit; }

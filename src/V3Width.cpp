@@ -3661,6 +3661,7 @@ private:
     }
     virtual void visit(AstCell* nodep) VL_OVERRIDE {
         if (!m_paramsOnly) {
+	    if (!v3Global.opt.atomiccOnly())
             if (VN_IS(nodep->modp(), NotFoundModule)) {
                 // We've resolved parameters and hit a module that we couldn't resolve.  It's
                 // finally time to report it.

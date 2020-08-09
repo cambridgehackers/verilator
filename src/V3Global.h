@@ -29,6 +29,7 @@
 #include "V3Error.h"
 #include "V3FileLine.h"
 #include "V3Options.h"
+#include <list>
 
 #include <string>
 #include VL_INCLUDE_UNORDERED_MAP
@@ -140,6 +141,7 @@ public:
 };
 
 extern V3Global v3Global;
+extern std::list<std::string> globalFilenameList;
 
 //######################################################################
 

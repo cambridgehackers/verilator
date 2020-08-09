@@ -1735,7 +1735,7 @@ private:
                            VSymEnt* moduleSymp, bool noWarn) {
         // Create implicit after warning
         if (!nodep->varp()) {
-            if (!noWarn) {
+            if (!noWarn && !v3Global.opt.atomiccOnly()) {
                 if (nodep->fileline()->warnIsOff(V3ErrorCode::I_DEF_NETTYPE_WIRE)) {
                     string suggest = m_statep->suggestSymFallback(moduleSymp, nodep->name(),
                                                                   LinkNodeMatcherVar());
