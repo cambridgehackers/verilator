@@ -146,15 +146,14 @@ static bool jjdumpPtrs(std::ostream& os, AstNode *me, string indent)
         bool isParam = vn->varType() == AstVarType::GPARAM;
         if (vn->isPrimaryIO())
             descr += "P";
-        //if (vn->isInoutish())
-        descr += vn->verilogKwd();
-//"inout  ";
-        //else if (vn->isInputish())
-            //descr += "input  ";
-        //else if (vn->isOutput())
-            //descr += "output ";
+        int kind = vn->direction();
         if (isParam)
             descr += "parameter ";
+        else if (kind == VDirection::INPUT || kind == VDirection::OUTPUT || kind == VDirection::INOUT) {
+            descr += vn->verilogKwd() + " ";
+            if (kind == VDirection::INPUT) // legacy formatting
+                descr += " ";
+        }
         else {
             if (vn->varType() != AstVarType::WIRE
              && vn->varType() != AstVarType::VAR /* reg */
@@ -339,6 +338,7 @@ static void process() {
 #if 1
 	const vl_unique_ptr<std::ofstream> logsp (V3File::new_ofstream(v3Global.opt.makeDir()+"/"+"linker.generated.IR", false));
 	if (logsp->fail()) v3fatalSrc("Can't write "<<"JDJDJD");
+        //v3Global.rootp()->dumpTree(cout, "FOO", 99); //, "FOO");
 	jjdumpTree(*logsp, v3Global.rootp(), "");
         for (auto item: globalFilenameList) {
             *logsp << "FILE " << item << endl;
