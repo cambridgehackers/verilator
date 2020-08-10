@@ -227,7 +227,8 @@ zzendl:;
         moduleInterface = "";
         return false;
     }
-    if (tname == "NETLIST" || tname == "NOTFOUNDMODULE" || tname == "FUNC" || tname == "TASK")
+    if (tname == "NETLIST" || tname == "NOTFOUNDMODULE" || tname == "FUNC" || tname == "TASK"
+     || tname == "PACKAGE")
         return false;
     if (tname == "VAR" || tname == "VARREF" || tname == "CONST" || tname == "PIN" 
      || tname == "LOGOR" || tname == "LOGAND" || tname == "LOGNOT" || tname == "EQ" || tname == "SEL"
@@ -235,7 +236,8 @@ zzendl:;
      || tname == "EXTEND" || tname == "REPLICATE" || tname == "ALWAYS"
      || tname == "SENTREE" || tname == "SENITEM" || tname == "BEGIN"
      || tname == "RANGE"
-     || tname == "ASSIGNW" || tname == "ASSIGNDLY" || tname == "TYPETABLE" || tname == "BASICDTYPE") {
+     || tname == "ASSIGNW" || tname == "ASSIGNDLY" || tname == "TYPETABLE" || tname == "BASICDTYPE"
+     || tname == "TYPEDEF") {
         return true;
     }
     os<<indent<<"    ";
