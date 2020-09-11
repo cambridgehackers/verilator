@@ -155,18 +155,15 @@ static bool jjdumpPtrs(std::ostream& os, AstNode *me, string indent)
                 descr += " ";
         }
         else {
-            if (vn->varType() != AstVarType::WIRE
-             && vn->varType() != AstVarType::VAR /* reg */
+            if (vn->varType() != AstVarType::WIRE /* verilog wire */
+             && vn->varType() != AstVarType::VAR  /* verilog reg */
+             && vn->varType() != AstVarType::IFACEREF
              && vn->varType() != AstVarType::TRI0 && vn->varType() != AstVarType::TRI1
              && vn->varType() != AstVarType::LPARAM
              && vn->varType() != AstVarType::GENVAR) {
-                 os << "PUNKKKK" << vn->varType().ascii() << " " << mname << endl;
+                 os << "BOGUS_" << vn->varType().ascii() << " " << mname << endl;
                  vn->dump(cout);
             }
-            if (vn->varType() != AstVarType::WIRE /* verilog wire */
-             && vn->varType() != AstVarType::VAR  /* verilog reg */
-             && vn->varType() != AstVarType::GENVAR)
-                 os << "BOGUS" << vn->varType().ascii() << " " << mname << endl;
             goto zzendl;
         }
         std::string typ = "1";
@@ -236,6 +233,7 @@ zzendl:;
      || tname == "EXTEND" || tname == "REPLICATE" || tname == "ALWAYS"
      || tname == "SENTREE" || tname == "SENITEM" || tname == "BEGIN"
      || tname == "RANGE"
+     || tname == "IFACE" || tname == "MODPORT" || tname == "MODPORTVARREF"
      || tname == "ASSIGNW" || tname == "ASSIGNDLY" || tname == "TYPETABLE" || tname == "BASICDTYPE"
      || tname == "TYPEDEF") {
         return true;
